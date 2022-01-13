@@ -4,6 +4,24 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private int maxHealth = 10;
+    private int health;
+    public int public_health
+    {
+        get { return health; }
+        set
+        {
+            if(value > maxHealth || value < 0)
+            {
+                Debug.Log("You can't set health to that!");
+            }
+            else
+            {
+                health = value;
+            }
+        }
+    }
+
     float speed = 5;
 
     Rigidbody2D rb;
@@ -11,6 +29,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        health = maxHealth;
     }
 
     // Start is called before the first frame update
@@ -23,6 +42,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
+        Debug.Log("Health: " + health);
     }
 
     private void Move()
