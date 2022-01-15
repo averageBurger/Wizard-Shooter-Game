@@ -10,7 +10,7 @@ public class Fireball : MonoBehaviour
 
     public DarkWizard wizard;
 
-    [SerializeField] float speed = 12f;
+    [SerializeField] float speed = 20f;
 
     Vector2 direction;
     Vector2 playerPos;

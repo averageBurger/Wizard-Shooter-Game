@@ -26,7 +26,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void MoveEnemy()
     {
         Vector2 targetPos = (Vector2)player.position;
-        rb.AddForce(Vector2.MoveTowards((Vector2)transform.position, targetPos, speed));
+        rb.AddForce((targetPos - (Vector2)transform.position).normalized * speed);
     }
 
     /// <summary>
