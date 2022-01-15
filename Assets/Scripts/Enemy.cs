@@ -12,6 +12,24 @@ public abstract class Enemy : MonoBehaviour
 
     protected float speed;
 
+    private int EmaxHealth;
+    private int Ehealth;
+    public int Epublic_health
+    {
+        get { return Ehealth; }
+        set
+        {
+            if (value > EmaxHealth || value < 0)
+            {
+                Debug.Log("You can't set health to that!");
+            }
+            else
+            {
+                Ehealth = value;
+            }
+        }
+    }
+
     protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,6 +39,7 @@ public abstract class Enemy : MonoBehaviour
     {
         player = GameObject.Find("Player").transform;
         playerScript = player.GetComponent<PlayerController>();
+        Ehealth = EmaxHealth;
     }
 
     protected virtual void MoveEnemy()

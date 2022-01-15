@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    private int maxHealth = 10;
+    private int maxHealth = 100;
     private int health;
     public int public_health
     {
@@ -24,7 +26,9 @@ public class PlayerController : MonoBehaviour
 
     float speed = 5;
 
+    [SerializeField] Transform shotPos;
     Rigidbody2D rb;
+    [SerializeField] HealthBarController healthBarScript;
 
     private void Awake()
     {
@@ -34,12 +38,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+        healthBarScript.SetHealth(maxHealth);
+        healthBarScript.SetMaxHealth(maxHealth);
     }
 
     void Update()
     {
         Move();
-        Debug.Log("Health: " + health);
+        Attack();
+        ManageHealth();
     }
 
     private void Move()
@@ -50,6 +57,25 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(Vector2.right * horizontalInput * speed, ForceMode2D.Force);
         rb.AddForce(Vector2.up * verticalInput * speed, ForceMode2D.Force);
+    }
+
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject2();
+            if (pooledProjectile != null)
+            {
+                pooledProjectile.SetActive(true); // activate it
+                pooledProjectile.transform.position = shotPos.position;
+            }
+        }
+    }
+
+    void ManageHealth()
+    {
+        healthBarScript.SetHealth(health);
+        Debug.Log("Health: " + health);
     }
 
     void FaceMovementDirection(float horizontal)

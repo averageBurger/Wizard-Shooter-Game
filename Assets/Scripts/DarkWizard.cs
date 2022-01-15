@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DarkWizard : Enemy
 {
-    [SerializeField] Collider2D tooCloseCheck;
+    Collider2D tooCloseCheck;
 
     [SerializeField] Transform shotPos;
 
@@ -21,14 +21,16 @@ public class DarkWizard : Enemy
         {
             pooledProjectile.SetActive(true); // activate it
             pooledProjectile.transform.position = shotPos.position;
+            pooledProjectile.GetComponent<Fireball>().wizard = this;
         }
-        pooledProjectile.GetComponent<Fireball>().wizard = this;
     }
 
     protected override void Start()
     {
+        Epublic_health = 5;
         base.Start();
         speed = -1;
+        tooCloseCheck = GameObject.Find("StayAway!").GetComponent<Collider2D>();
         StartCoroutine(AttackTimer());
     }
 
