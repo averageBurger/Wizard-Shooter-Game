@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Troll : Enemy
 {
-    [SerializeField] Collider2D playerCollider;
+    Collider2D playerCollider;
 
     float attackSpeed = 2;
 
@@ -17,6 +17,7 @@ public class Troll : Enemy
     {
         base.Start();
         speed = 3;
+        playerCollider = GameObject.Find("Player").GetComponent<BoxCollider2D>();
     }
 
     private void Update()
