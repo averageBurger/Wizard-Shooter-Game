@@ -29,16 +29,13 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
         health = maxHealth;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
         Move();
@@ -49,8 +46,25 @@ public class PlayerController : MonoBehaviour
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        FaceMovementDirection(horizontalInput);
 
         rb.AddForce(Vector2.right * horizontalInput * speed, ForceMode2D.Force);
         rb.AddForce(Vector2.up * verticalInput * speed, ForceMode2D.Force);
+    }
+
+    void FaceMovementDirection(float horizontal)
+    {
+        if (horizontal > 0)
+        {
+            transform.rotation = new Quaternion(0, 180, transform.rotation.z, 0);
+        }
+        else if (horizontal < 0)
+        {
+            transform.rotation = new Quaternion(0, 0, transform.rotation.z, 0);
+        }
+        else
+        {
+            transform.rotation = new Quaternion(0, transform.rotation.y, transform.rotation.z, 0);
+        }
     }
 }

@@ -4,29 +4,29 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    GameObject player;
+    protected Transform player;
 
     PlayerController playerScript;
 
-    Rigidbody2D rb;
+    protected Rigidbody2D rb;
 
-    float speed;
+    protected float speed;
 
     protected void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    protected void Start()
+    protected virtual void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Player").transform;
         playerScript = player.GetComponent<PlayerController>();
     }
 
-    protected void MoveEnemy(float maxDistance)
+    protected virtual void MoveEnemy()
     {
-        Vector2 targetPos = (Vector2)player.transform.position;
-        Vector2.MoveTowards((Vector2)transform.position, targetPos, maxDistance);
+        Vector2 targetPos = (Vector2)player.position;
+        rb.AddForce(Vector2.MoveTowards((Vector2)transform.position, targetPos, speed));
     }
 
     /// <summary>
@@ -39,8 +39,20 @@ public abstract class Enemy : MonoBehaviour
         playerScript.public_health -= damage;
     }
 
-    protected void Die()
+    protected void FacePlayersDirection()
     {
-
+        Vector2 direction = player.position - transform.position;
+        if (direction.x > 0)
+        {
+            transform.rotation = new Quaternion(0, 180, transform.rotation.z, 0);
+        }
+        else if (direction.x < 0)
+        {
+            transform.rotation = new Quaternion(0, 0, transform.rotation.z, 0);
+        }
+        else
+        {
+            transform.rotation = new Quaternion(0, transform.rotation.y, transform.rotation.z, 0);
+        }
     }
 }

@@ -4,32 +4,60 @@ using UnityEngine;
 
 public class DarkWizard : Enemy
 {
-    float maxDistance = -3;
+    [SerializeField] Collider2D tooCloseCheck;
 
-    //temporary:
-    bool colliding = false;
+    [SerializeField] Transform shotPos;
+
+    Vector2 direction;
+
+    float minAttackSpeed = 2;
+    float maxAttackSpeed = 4;
+    float angle;
 
     protected override void Attack()
     {
-        DealDamage(2);
+        GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject();
+        if (pooledProjectile != null)
+        {
+            pooledProjectile.SetActive(true); // activate it
+            pooledProjectile.transform.position = shotPos.position;
+        }
+        pooledProjectile.GetComponent<Fireball>().wizard = this;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        speed = -1;
+        StartCoroutine(AttackTimer());
     }
 
     private void Update()
     {
-        MoveEnemy(maxDistance);
+        MoveEnemy();
+        FacePlayersDirection();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Damage()
     {
-        if (!colliding)
+        DealDamage(2);
+    }
+
+    protected override void MoveEnemy()
+    {
+        if (rb.IsTouching(tooCloseCheck))
         {
-            DealDamage(2);
-            colliding = true;
+            direction = player.position - transform.position;
+            rb.velocity = (Vector2)direction.normalized * speed;
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    IEnumerator AttackTimer()
     {
-        colliding = false;
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(minAttackSpeed, maxAttackSpeed));
+            Attack();
+        }
     }
 }
