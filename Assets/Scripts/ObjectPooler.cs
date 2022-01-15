@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
-    public static ObjectPooler SharedInstance;
-    public List<GameObject> pooledObjects;
-    public GameObject objectToPool;
-    public int amountToPool;
+    public static ObjectPooler SharedInstance { get; private set; }
+    [SerializeField] private List<GameObject> pooledObjects;
+    [SerializeField] private GameObject objectToPool;
+    [SerializeField] private int amountToPool;
 
     void Awake()
     {

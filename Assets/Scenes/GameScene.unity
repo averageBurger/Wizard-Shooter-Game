@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 36456735}
   - component: {fileID: 36456734}
   - component: {fileID: 36456738}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -253,6 +253,7 @@ Transform:
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 635430390}
+  - {fileID: 1282544227}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -281,7 +282,7 @@ GameObject:
   - component: {fileID: 44893908}
   - component: {fileID: 44893907}
   - component: {fileID: 44893911}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: DarkWizard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -394,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 44893906}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.06, y: -0.03, z: 0}
+  m_LocalPosition: {x: 4.37, y: 0.09, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 780563502}
@@ -742,7 +743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 780563502}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: ShotPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -851,7 +852,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pooledObjects: []
   objectToPool: {fileID: 1857195864946724298, guid: f7f37a4542d6ef84cb2dcb357eade1b1, type: 3}
-  amountToPool: 3
+  amountToPool: 10
 --- !u!4 &1080704010
 Transform:
   m_ObjectHideFlags: 0
@@ -865,6 +866,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1282544225
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1282544227}
+  - component: {fileID: 1282544226}
+  m_Layer: 0
+  m_Name: CloseEnough
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!58 &1282544226
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282544225}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+--- !u!4 &1282544227
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1282544225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_Children: []
+  m_Father: {fileID: 36456737}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1492081769
 GameObject:
@@ -992,6 +1040,7 @@ GameObject:
   - component: {fileID: 1769869381}
   - component: {fileID: 1769869384}
   - component: {fileID: 1769869383}
+  - component: {fileID: 1769869385}
   m_Layer: 7
   m_Name: Troll
   m_TagString: Untagged
@@ -1058,7 +1107,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769869380}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.02, y: 0.36, z: 0}
+  m_LocalPosition: {x: -5.97, y: 0.34, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1111,6 +1160,19 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1769869385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769869380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e6df11557428104abc67b3617e4af9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerCollider: {fileID: 1282544226}
 --- !u!1 &1837022573
 GameObject:
   m_ObjectHideFlags: 0
