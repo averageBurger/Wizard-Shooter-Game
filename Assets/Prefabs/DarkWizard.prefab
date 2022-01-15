@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 5522129853981662416}
   m_Layer: 8
   m_Name: DarkWizard
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

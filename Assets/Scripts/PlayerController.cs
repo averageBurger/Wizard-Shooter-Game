@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
         {
             if(value > maxHealth || value < 0)
             {
-                Debug.Log("You can't set health to that!");
+                Debug.Log("You can't set player health to that!");
             }
             else
             {
@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    float speed = 5;
+    float speed = 6;
 
     [SerializeField] Transform shotPos;
     Rigidbody2D rb;
@@ -44,9 +44,13 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
         Attack();
         ManageHealth();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     private void Move()
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject2();
             if (pooledProjectile != null)

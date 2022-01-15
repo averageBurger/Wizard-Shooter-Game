@@ -15,6 +15,7 @@ public class Troll : Enemy
 
     protected override void Start()
     {
+        EmaxHealth = 2;
         base.Start();
         speed = 3;
         playerCollider = GameObject.Find("Player").GetComponent<BoxCollider2D>();
@@ -22,8 +23,12 @@ public class Troll : Enemy
 
     private void Update()
     {
-        MoveEnemy();
         FacePlayersDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveEnemy();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

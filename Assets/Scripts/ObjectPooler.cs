@@ -25,7 +25,7 @@ public class ObjectPooler : MonoBehaviour
         pooledObjects = new List<GameObject>();
         for (int i = 0; i < amountToPool; i++)
         {
-            GameObject obj = (GameObject)Instantiate(objectToPool);
+            GameObject obj = (GameObject)Instantiate(objectToPool, Vector2.zero, new Quaternion(0, 0, 0, 0));
             obj.SetActive(false);
             pooledObjects.Add(obj);
             obj.transform.SetParent(this.transform); // set as children of Spawn Manager

@@ -12,14 +12,19 @@ public class Brute : Enemy
 
     protected override void Start()
     {
+        EmaxHealth = 3;
         base.Start();
         speed = 4;
     }
 
     private void Update()
     {
-        MoveEnemy();
         FacePlayersDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveEnemy();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

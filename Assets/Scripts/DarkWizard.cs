@@ -27,7 +27,7 @@ public class DarkWizard : Enemy
 
     protected override void Start()
     {
-        Epublic_health = 5;
+        EmaxHealth = 2;
         base.Start();
         speed = -1;
         tooCloseCheck = GameObject.Find("StayAway!").GetComponent<Collider2D>();
@@ -36,8 +36,12 @@ public class DarkWizard : Enemy
 
     private void Update()
     {
-        MoveEnemy();
         FacePlayersDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        MoveEnemy();
     }
 
     public void Damage()

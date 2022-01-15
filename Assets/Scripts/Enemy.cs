@@ -12,7 +12,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected float speed;
 
-    private int EmaxHealth;
+    protected int EmaxHealth;
     private int Ehealth;
     public int Epublic_health
     {
@@ -21,7 +21,7 @@ public abstract class Enemy : MonoBehaviour
         {
             if (value > EmaxHealth || value < 0)
             {
-                Debug.Log("You can't set health to that!");
+                Debug.Log("You can't set enemy health to that!");
             }
             else
             {
@@ -56,6 +56,11 @@ public abstract class Enemy : MonoBehaviour
     protected void DealDamage(int damage)
     {
         playerScript.public_health -= damage;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Epublic_health -= damage;
     }
 
     protected void FacePlayersDirection()
