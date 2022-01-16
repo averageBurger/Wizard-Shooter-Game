@@ -31,10 +31,7 @@ public class Fireball : MonoBehaviour
 
     void Update()
     {
-        playerPos = (Vector2)player.position;
-        direction = playerPos - (Vector2)transform.position;
-        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
+        GoTowardsPlayer(); // ABSTRACTION
     }
 
     private void FixedUpdate()
@@ -51,9 +48,17 @@ public class Fireball : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            wizard.Damage();
+            wizard.Damage(); // ABSTRACTION
         }
         gameObject.SetActive(false);
+    }
+
+    void GoTowardsPlayer()
+    {
+        playerPos = (Vector2)player.position;
+        direction = playerPos - (Vector2)transform.position;
+        angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle - 90f, Vector3.forward);
     }
 
     IEnumerator DespawnTimer()

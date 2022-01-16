@@ -6,7 +6,7 @@ public abstract class Enemy : MonoBehaviour
 {
     protected Transform player;
 
-    PlayerController playerScript;
+    protected PlayerController playerScript;
 
     protected Rigidbody2D rb;
 
@@ -14,14 +14,20 @@ public abstract class Enemy : MonoBehaviour
 
     protected int EmaxHealth;
     private int Ehealth;
-    public int Epublic_health
+    public int Epublic_health // ENCAPSULATION
     {
         get { return Ehealth; }
         set
         {
-            if (value > EmaxHealth || value < 0)
+            if (value < 0)
             {
-                Debug.Log("You can't set enemy health to that!");
+                Debug.Log("You can't set enemy health to that! Setting it to 0.");
+                Ehealth = 0;
+            }
+            else if(value > EmaxHealth)
+            {
+                Debug.Log("You can't set enemy health to that! Setting it to max health.");
+                Ehealth = EmaxHealth;
             }
             else
             {
@@ -42,6 +48,23 @@ public abstract class Enemy : MonoBehaviour
         Ehealth = EmaxHealth;
     }
 
+    protected virtual void Update()
+    {
+        if (!playerScript.gameOver)
+        {
+            FacePlayersDirection(); // ABSTRACTION
+            CheckIfDead(); // ABSTRACTION
+        }
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!playerScript.gameOver)
+        {
+            MoveEnemy(); // ABSTRACTION
+        }
+    }
+
     protected virtual void MoveEnemy()
     {
         Vector2 targetPos = (Vector2)player.position;
@@ -58,11 +81,6 @@ public abstract class Enemy : MonoBehaviour
         playerScript.public_health -= damage;
     }
 
-    public void TakeDamage(int damage)
-    {
-        Epublic_health -= damage;
-    }
-
     protected void FacePlayersDirection()
     {
         Vector2 direction = player.position - transform.position;
@@ -77,6 +95,15 @@ public abstract class Enemy : MonoBehaviour
         else
         {
             transform.rotation = new Quaternion(0, transform.rotation.y, transform.rotation.z, 0);
+        }
+    }
+
+    protected void CheckIfDead()
+    {
+        if (Ehealth == 0)
+        {
+            Destroy(gameObject);
+            playerScript.score += 1;
         }
     }
 }

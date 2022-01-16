@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,9 +7,10 @@ public class FireBall2 : MonoBehaviour
 {
     Rigidbody2D rb;
 
-    float speed = 10;
+    int damage = 2;
 
-    Vector2 direction;
+    Vector2 mousePos;
+    Vector2 towardsMouse;
 
     private void Awake()
     {
@@ -17,16 +19,12 @@ public class FireBall2 : MonoBehaviour
 
     private void OnEnable()
     {
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 towardsMouse = mousePos - rb.position;
-        float angle = Mathf.Atan2(towardsMouse.y, towardsMouse.x) * Mathf.Rad2Deg - 90f;
-        rb.rotation = angle;
-        direction = towardsMouse;
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void Update()
     {
-        rb.velocity = direction.normalized * speed;
+        MoveTowardMouse(); // ABSTRACTION
     }
 
     private void OnDisable()
@@ -39,8 +37,16 @@ public class FireBall2 : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            collision.gameObject.GetComponent<Enemy>().TakeDamage(1);
+            collision.gameObject.GetComponent<DamageDealer>().DealDamage(damage);
         }
         gameObject.SetActive(false);
+    }
+
+    void MoveTowardMouse()
+    {
+        towardsMouse = mousePos - rb.position;
+        float angle = Mathf.Atan2(towardsMouse.y, towardsMouse.x) * Mathf.Rad2Deg - 90f;
+        rb.rotation = angle;
+        rb.AddForce(this.transform.up, ForceMode2D.Impulse);
     }
 }

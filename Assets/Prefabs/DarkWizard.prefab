@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5522129853981662419}
   - component: {fileID: 5522129853981662420}
   - component: {fileID: 5522129853981662416}
+  - component: {fileID: 4076975494285289366}
   m_Layer: 8
   m_Name: DarkWizard
   m_TagString: Enemy
@@ -176,3 +177,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotPos: {fileID: 5522129853241060905}
+--- !u!114 &4076975494285289366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5522129853981662421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0713194065dc2f9468404f907082cbbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 5522129853981662416}

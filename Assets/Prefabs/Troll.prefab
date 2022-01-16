@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8102675714178858009}
   - component: {fileID: 8102675714178858006}
   - component: {fileID: 8102675714178858008}
+  - component: {fileID: 3584961532382060663}
   m_Layer: 7
   m_Name: Troll
   m_TagString: Enemy
@@ -144,3 +145,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e6df11557428104abc67b3617e4af9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3584961532382060663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8102675714178858005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0713194065dc2f9468404f907082cbbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 8102675714178858008}

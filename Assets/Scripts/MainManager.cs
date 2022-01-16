@@ -7,7 +7,7 @@ public class MainManager : MonoBehaviour
     GameObject player;
     [SerializeField] List<GameObject> enemyPrefabs;
 
-    float spawnTime = 3;
+    float spawnTime = 4;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class MainManager : MonoBehaviour
     void SpawnEnemy()
     {
         GameObject enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
-        Vector2 pos = GetSpawnPos();
+        Vector2 pos = GetSpawnPos(); // ABSTRACTION
         Instantiate(enemy, pos, transform.rotation);
     }
 
@@ -42,7 +42,7 @@ public class MainManager : MonoBehaviour
 
     IEnumerator SpawnTimer()
     {
-        while (true)
+        while (!player.GetComponent<PlayerController>().gameOver)
         {
             SpawnEnemy();
             yield return new WaitForSeconds(spawnTime);

@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class HealthBarController : MonoBehaviour
 {
-    public Slider healthSlider;
-    public Gradient gradient;
-    public Image fill;
+    [SerializeField]Slider healthSlider;
+    [SerializeField] Gradient gradient;
+    [SerializeField] Image fill;
 
     // Start is called before the first frame update
     public void SetHealth(int health)

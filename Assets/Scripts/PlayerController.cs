@@ -6,16 +6,22 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    private int maxHealth = 100;
+    private int maxHealth = 60;
     private int health;
-    public int public_health
+    public int public_health // ENCAPSULATION
     {
         get { return health; }
         set
         {
-            if(value > maxHealth || value < 0)
+            if (value < 0)
             {
-                Debug.Log("You can't set player health to that!");
+                Debug.Log("You can't set player health to that! Setting it to 0.");
+                health = 0;
+            }
+            else if (value > maxHealth)
+            {
+                Debug.Log("You can't set player health to that! Setting it to max health.");
+                health = maxHealth;
             }
             else
             {
@@ -24,11 +30,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public int score = 0;
+
     float speed = 6;
+    float attackSpeed = 1;
+
+    bool canShoot = true;
+    public bool gameOver = false;
 
     [SerializeField] Transform shotPos;
     Rigidbody2D rb;
     [SerializeField] HealthBarController healthBarScript;
+    [SerializeField] TextMeshProUGUI scoreText;
+    [SerializeField] GameObject gameOverText;
 
     private void Awake()
     {
@@ -44,13 +58,20 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Attack();
-        ManageHealth();
+        if (!gameOver)
+        {
+            ManageHealth(); // ABSTRACTION
+            Attack(); // ABSTRACTION
+            scoreText.text = "Score: " + score;
+        }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (!gameOver)
+        {
+            Move(); // ABSTRACTION
+        }
     }
 
     private void Move()
@@ -65,13 +86,15 @@ public class PlayerController : MonoBehaviour
 
     void Attack()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && canShoot)
         {
             GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject2();
             if (pooledProjectile != null)
             {
                 pooledProjectile.SetActive(true); // activate it
                 pooledProjectile.transform.position = shotPos.position;
+                canShoot = false;
+                StartCoroutine(ReloadTimer());
             }
         }
     }
@@ -79,7 +102,11 @@ public class PlayerController : MonoBehaviour
     void ManageHealth()
     {
         healthBarScript.SetHealth(health);
-        Debug.Log("Health: " + health);
+        if (health == 0)
+        {
+            gameOver = true;
+            gameOverText.SetActive(true);
+        }
     }
 
     void FaceMovementDirection(float horizontal)
@@ -96,5 +123,11 @@ public class PlayerController : MonoBehaviour
         {
             transform.rotation = new Quaternion(0, transform.rotation.y, transform.rotation.z, 0);
         }
+    }
+
+    IEnumerator ReloadTimer()
+    {
+        yield return new WaitForSeconds(attackSpeed);
+        canShoot = true;
     }
 }
