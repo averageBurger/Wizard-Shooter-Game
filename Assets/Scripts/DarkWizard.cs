@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DarkWizard : Enemy
+public class DarkWizard : Enemy //Inheritance
 {
-    [SerializeField] Collider2D tooCloseCheck;
+    Collider2D tooCloseCheck;
 
     [SerializeField] Transform shotPos;
 
@@ -14,36 +14,32 @@ public class DarkWizard : Enemy
     float maxAttackSpeed = 4;
     float angle;
 
-    protected override void Attack()
+    protected override void Attack() // POLYMORPHISM
     {
         GameObject pooledProjectile = ObjectPooler.SharedInstance.GetPooledObject();
         if (pooledProjectile != null)
         {
             pooledProjectile.SetActive(true); // activate it
             pooledProjectile.transform.position = shotPos.position;
+            pooledProjectile.GetComponent<Fireball>().wizard = this;
         }
-        pooledProjectile.GetComponent<Fireball>().wizard = this;
     }
 
-    protected override void Start()
+    protected override void Start() // POLYMORPHISM
     {
+        EmaxHealth = 5;
         base.Start();
         speed = -1;
+        tooCloseCheck = GameObject.Find("StayAway!").GetComponent<Collider2D>();
         StartCoroutine(AttackTimer());
-    }
-
-    private void Update()
-    {
-        MoveEnemy();
-        FacePlayersDirection();
     }
 
     public void Damage()
     {
-        DealDamage(2);
+        DealDamage(2); // ABSTRACTION
     }
 
-    protected override void MoveEnemy()
+    protected override void MoveEnemy() // POLYMORPHISM
     {
         if (rb.IsTouching(tooCloseCheck))
         {
@@ -54,7 +50,7 @@ public class DarkWizard : Enemy
 
     IEnumerator AttackTimer()
     {
-        while (true)
+        while (!playerScript.gameOver)
         {
             yield return new WaitForSeconds(Random.Range(minAttackSpeed, maxAttackSpeed));
             Attack();

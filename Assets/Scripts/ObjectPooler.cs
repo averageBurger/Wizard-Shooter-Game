@@ -9,6 +9,10 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private GameObject objectToPool;
     [SerializeField] private int amountToPool;
 
+    [SerializeField] private List<GameObject> pooledObjects2;
+    [SerializeField] private GameObject objectToPool2;
+    [SerializeField] private int amountToPool2;
+
     void Awake()
     {
         SharedInstance = this;
@@ -21,9 +25,18 @@ public class ObjectPooler : MonoBehaviour
         pooledObjects = new List<GameObject>();
         for (int i = 0; i < amountToPool; i++)
         {
-            GameObject obj = (GameObject)Instantiate(objectToPool);
+            GameObject obj = (GameObject)Instantiate(objectToPool, Vector2.zero, new Quaternion(0, 0, 0, 0));
             obj.SetActive(false);
             pooledObjects.Add(obj);
+            obj.transform.SetParent(this.transform); // set as children of Spawn Manager
+        }
+
+        pooledObjects2 = new List<GameObject>();
+        for (int i = 0; i < amountToPool2; i++)
+        {
+            GameObject obj = (GameObject)Instantiate(objectToPool2);
+            obj.SetActive(false);
+            pooledObjects2.Add(obj);
             obj.transform.SetParent(this.transform); // set as children of Spawn Manager
         }
     }
@@ -37,6 +50,21 @@ public class ObjectPooler : MonoBehaviour
             if (!pooledObjects[i].activeInHierarchy)
             {
                 return pooledObjects[i];
+            }
+        }
+        // otherwise, return null   
+        return null;
+    }
+
+    public GameObject GetPooledObject2()
+    {
+        // For as many objects as are in the pooledObjects list
+        for (int i = 0; i < pooledObjects2.Count; i++)
+        {
+            // if the pooled objects is NOT active, return that object 
+            if (!pooledObjects2[i].activeInHierarchy)
+            {
+                return pooledObjects2[i];
             }
         }
         // otherwise, return null   
